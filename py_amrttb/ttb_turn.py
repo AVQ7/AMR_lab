@@ -89,7 +89,7 @@ class TTBController(Node):
 
         #step 2
 
-        if self.distance >= 10:
+        if self.distance >= 20:
             self.turn = True
             self.count = 0
         else:
