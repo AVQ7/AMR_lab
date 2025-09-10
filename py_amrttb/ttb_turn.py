@@ -107,19 +107,19 @@ class TTBController(Node):
 
         #step 2
 
-        if self.distance >= 50:
+        if self.distance >= 500:
             self.turn = True
             self.time = 0
         else:
             self.turn = False
-            self.random = random.uniform(-1,1)
+            self.random = float(random.uniform(-1,1))
             if self.random > 0:
                 self.turnDirection = 1
             else:
                 self.turnDirection = -1
         
         if self.time < 30 and self.turn == True:
-            msg.angular.z = self.turnDirection * 5
+            msg.angular.z = float(self.turnDirection) * 5
             self.time += 1
 
   
@@ -136,6 +136,7 @@ class TTBController(Node):
         #     self.previous_error = error
         
         # self.count_three -= 1
+        
         
 
 
@@ -163,7 +164,7 @@ class TTBController(Node):
     #step 2
     def ir_callback(self, msg):
         # print angular velocity from imu message to console
-        self.distance = (msg.readings[3].value + msg.readings[4].value + msg.readings[2].value + msg.readings[5].value)*0.25
+        self.distance = max(msg.readings[3].value, msg.readings[4].value, msg.readings[2].value, msg.readings[5].value)
         
         self.get_logger().info(f'ir_readings: {self.distance:0.10f}')
 
